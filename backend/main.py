@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from api.v1.routes import router
+from backend.api.v1.routes import router
 
 app = FastAPI(title="KnowledgeMind RAG API")
 

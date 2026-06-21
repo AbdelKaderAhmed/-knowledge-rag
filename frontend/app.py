@@ -1,11 +1,22 @@
 import streamlit as st
 import requests
 
-st.title("KnowledgeMind RAG Interface")
+st.title("KnowledgeMind - Document Ingestion")
 
-if st.button("Check Connection"):
-    try:
-        response = requests.get("http://127.0.0.1:8000/health")
-        st.success(f"Response: {response.json()}")
-    except Exception as e:
-        st.error(f"Failed to connect to backend: {e}")
+uploaded_file = st.file_uploader("Choose a PDF file", type="pdf")
+
+if uploaded_file is not None:
+    if st.button("Upload to Backend"):
+        
+        files = {"file": (uploaded_file.name, uploaded_file, "application/pdf")}
+        
+        try:
+            
+            response = requests.post("http://localhost:8000/api/v1/upload", files=files)
+            
+            if response.status_code == 200:
+                st.success(f"File uploaded successfully! Path: {response.json()['path']}")
+            else:
+                st.error(f"Error: {response.json().get('detail', 'Unknown error')}")
+        except Exception as e:
+            st.error(f"Connection error: {e}")
