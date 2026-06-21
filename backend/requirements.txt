@@ -9,3 +9,5 @@ langchain-groq
 python-dotenv
 python-multipart
 pypdf
+sentence-transformers
+langchain-huggingface
